@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class OauthUtils {
 
-    //api for proc
+    // api for proc
     public final static String url  = "https://login.gt.cn/auth/api/user/appgateway/authenticate";
     // api for test
 //    public final static String url  = "http://am.gttest.com:60100/auth/api/user/appgateway/authenticate";
