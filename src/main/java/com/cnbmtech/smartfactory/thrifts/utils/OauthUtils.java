@@ -6,6 +6,8 @@ import com.xiaoleilu.hutool.lang.Singleton;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 

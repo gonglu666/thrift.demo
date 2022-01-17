@@ -9,6 +9,10 @@ import com.minxing365.thrift.login_result;
 import org.apache.log4j.Logger;
 import org.springframework.util.StringUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.UUID;
+
 /**
  * Created by gonglu
  * 2021/6/2
@@ -23,7 +27,13 @@ public class DefaultAccountAuthenticationWithExtParamService implements AccountA
 
     @Override
     public AccountAuthenticationResponse validate_with_params(String loginName, String password, String flag) {
-        log.info("validAccount in >>>loginName=" + loginName + "; password=" + password);
+        String threadUUID = UUID.randomUUID().toString().concat(" ");
+        try {
+            password = URLEncoder.encode(password, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        log.info(threadUUID+"validAccount in >>>loginName=" + loginName + "; password=" + password+"; flag="+flag);
         JSONObject result = null;
         AccountAuthenticationResponse accountAuthenticationResponse = null;
         if (!StringUtils.isEmpty(flag) && mobileFlag.equalsIgnoreCase(flag)) {
@@ -31,7 +41,7 @@ public class DefaultAccountAuthenticationWithExtParamService implements AccountA
         } else {
             result =oauthUtils.validAccount(loginName,password);
         }
-        log.info(JSONObject.toJSONString(result));
+        log.info(threadUUID+JSONObject.toJSONString(result));
         if("9001".equals(result.getString("code"))){
             accountAuthenticationResponse = new AccountAuthenticationResponse(true,JSONObject.toJSONString(result),new AccountAuthenticationInfo());
         }else {
